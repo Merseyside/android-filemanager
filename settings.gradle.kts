@@ -18,5 +18,6 @@ pluginManagement {
 }
 
 include(":app")
+include(":filemanager")
 
 rootProject.name="android-template"

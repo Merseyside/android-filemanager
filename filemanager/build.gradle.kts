@@ -1,21 +1,16 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-android-extensions")
-    id("kotlinx-serialization")
+    id("com.github.dcendents.android-maven")
 }
+
+group = "com.github.Merseyside"
+version = Versions.Android.version
 
 android {
     compileSdkVersion(Versions.Android.compileSdk)
-
-    dataBinding {
-        isEnabled = true
-    }
-
-    dexOptions {
-        javaMaxHeapSize = "2g"
-    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -25,14 +20,8 @@ android {
     defaultConfig {
         minSdkVersion(Versions.Android.minSdk)
         targetSdkVersion(Versions.Android.targetSdk)
-
-        applicationId = Versions.Common.appId
-
         versionCode = Versions.Android.versionCode
         versionName = Versions.Android.version
-
-        vectorDrawables.useSupportLibrary = true
-        multiDexEnabled = true
     }
 
     buildTypes {
@@ -69,12 +58,7 @@ android {
 
 val androidLibs = listOf(
     Deps.Libs.kotlinStdLib,
-    Deps.Libs.appCompat,
-    Deps.Libs.material,
-    Deps.Libs.fragment,
-    Deps.Libs.recyclerView,
-    Deps.Libs.lifecycle,
-    Deps.Libs.constraintLayout
+    Deps.Libs.zip4j
 )
 
 dependencies {
