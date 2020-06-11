@@ -1,6 +1,6 @@
-object Versions {
+object FilemanagerVersions {
     object Common {
-        val appId = "com.merseyside.template"
+        val appId = "com.merseyside.filemanager"
     }
 
     object Android {
@@ -8,23 +8,21 @@ object Versions {
         const val targetSdk = 29
         const val minSdk = 21
 
-        const val version = "1.0.0"
-        const val versionCode = 100
+        const val version = "1.0.1"
+        const val versionCode = 101
     }
 
     const val kotlin = "1.3.72"
 
-
-
     object Plugins {
-        const val kotlin = Versions.kotlin
-        const val serialization = Versions.kotlin
-        const val androidExtensions = Versions.kotlin
+        const val kotlin = FilemanagerVersions.kotlin
+        const val serialization = FilemanagerVersions.kotlin
+        const val androidExtensions = FilemanagerVersions.kotlin
     }
 
     object Libs {
 
-        const val kotlinStdLib = Versions.kotlin
+        const val kotlinStdLib = FilemanagerVersions.kotlin
         const val coroutines = "1.3.7"
         const val appCompat = "1.1.0"
         const val material = "1.2.0-alpha05"

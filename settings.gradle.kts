@@ -11,7 +11,7 @@ pluginManagement {
 
     resolutionStrategy.eachPlugin {
         // part of plugins defined in Deps.Plugins, part in buildSrc/build.gradle.kts
-        val module = Deps.plugins[requested.id.id] ?: return@eachPlugin
+        val module = FilemanagerDeps.plugins[requested.id.id] ?: return@eachPlugin
 
         useModule(module)
     }
@@ -20,4 +20,4 @@ pluginManagement {
 include(":app")
 include(":filemanager")
 
-rootProject.name="android-template"
+rootProject.name="android-filemanager"

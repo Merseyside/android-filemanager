@@ -6,11 +6,12 @@ plugins {
     id("com.github.dcendents.android-maven")
 }
 
+
 group = "com.github.Merseyside"
-version = Versions.Android.version
+version = FilemanagerVersions.Android.version
 
 android {
-    compileSdkVersion(Versions.Android.compileSdk)
+    compileSdkVersion(FilemanagerVersions.Android.compileSdk)
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -18,10 +19,10 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion(Versions.Android.minSdk)
-        targetSdkVersion(Versions.Android.targetSdk)
-        versionCode = Versions.Android.versionCode
-        versionName = Versions.Android.version
+        minSdkVersion(FilemanagerVersions.Android.minSdk)
+        targetSdkVersion(FilemanagerVersions.Android.targetSdk)
+        versionCode = FilemanagerVersions.Android.versionCode
+        versionName = FilemanagerVersions.Android.version
     }
 
     buildTypes {
@@ -57,12 +58,15 @@ android {
 }
 
 val androidLibs = listOf(
-    Deps.Libs.kotlinStdLib,
-    Deps.Libs.zip4j
+    FilemanagerDeps.Libs.kotlinStdLib,
+    FilemanagerDeps.Libs.zip4j
 )
 
 dependencies {
     androidLibs.forEach { lib -> implementation(lib) }
 
     compileOnly("javax.annotation:jsr250-api:1.0")
+}
+repositories {
+    mavenCentral()
 }

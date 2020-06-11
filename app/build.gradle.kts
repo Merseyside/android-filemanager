@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.Android.compileSdk)
+    compileSdkVersion(FilemanagerVersions.Android.compileSdk)
 
     dataBinding {
         isEnabled = true
@@ -23,13 +23,13 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion(Versions.Android.minSdk)
-        targetSdkVersion(Versions.Android.targetSdk)
+        minSdkVersion(FilemanagerVersions.Android.minSdk)
+        targetSdkVersion(FilemanagerVersions.Android.targetSdk)
 
-        applicationId = Versions.Common.appId
+        applicationId = FilemanagerVersions.Common.appId
 
-        versionCode = Versions.Android.versionCode
-        versionName = Versions.Android.version
+        versionCode = FilemanagerVersions.Android.versionCode
+        versionName = FilemanagerVersions.Android.version
 
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
@@ -68,13 +68,13 @@ android {
 }
 
 val androidLibs = listOf(
-    Deps.Libs.kotlinStdLib,
-    Deps.Libs.appCompat,
-    Deps.Libs.material,
-    Deps.Libs.fragment,
-    Deps.Libs.recyclerView,
-    Deps.Libs.lifecycle,
-    Deps.Libs.constraintLayout
+    FilemanagerDeps.Libs.kotlinStdLib,
+    FilemanagerDeps.Libs.appCompat,
+    FilemanagerDeps.Libs.material,
+    FilemanagerDeps.Libs.fragment,
+    FilemanagerDeps.Libs.recyclerView,
+    FilemanagerDeps.Libs.lifecycle,
+    FilemanagerDeps.Libs.constraintLayout
 )
 
 dependencies {
