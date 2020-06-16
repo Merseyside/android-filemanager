@@ -103,13 +103,14 @@ object FileManager {
     }
 
     fun createFile(path: String, filename: String): File? {
-        try {
         val filePath = File(path)
-            if (!filePath.exists()) {
-                filePath.mkdir()
-            }
+        if (!filePath.exists()) {
+            filePath.mkdir()
+        }
 
-            val file = File(filePath, filename)
+        val file = File(filePath, filename)
+
+        try {
 
             if (!file.exists()) {
                 if (file.createNewFile()) {
@@ -123,6 +124,7 @@ object FileManager {
                 }
             }
         } catch (e: Exception) {
+            Log.e(TAG, "path = $file")
             e.printStackTrace()
         }
 

@@ -1,6 +1,6 @@
 object FilemanagerVersions {
     object Common {
-        val appId = "com.merseyside.filemanager"
+        const val appId = "com.merseyside.filemanager"
     }
 
     object Android {
@@ -8,8 +8,8 @@ object FilemanagerVersions {
         const val targetSdk = 29
         const val minSdk = 21
 
-        const val version = "1.0.1"
-        const val versionCode = 101
+        const val version = "1.0.2"
+        const val versionCode = 102
     }
 
     const val kotlin = "1.3.72"
@@ -31,8 +31,6 @@ object FilemanagerVersions {
         const val lifecycle = "2.0.0"
         const val cardView = "1.0.0"
         const val recyclerView = "1.0.0"
-
         const val zip4j = "2.6.0"
-
     }
 }
