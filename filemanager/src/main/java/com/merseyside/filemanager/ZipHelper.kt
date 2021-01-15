@@ -29,22 +29,6 @@ class ZipHelper(var file : File) {
 
     }
 
-//    fun setPassword(password : String) {
-//        parameters.isEncryptFiles = true
-//
-//        //Set the encryption method to AES Zip Encryption
-//        parameters.encryptionMethod = EncryptionMethod.ZIP_STANDARD
-//
-//        //AES_STRENGTH_128 - For both encryption and decryption
-//        //AES_STRENGTH_192 - For decryption only
-//        //AES_STRENGTH_256 - For both encryption and decryption
-//        //Key strength 192 cannot be used for encryption. But if a zip file already has a
-//        //file encrypted with key strength of 192, then Zip4j can decrypt this file
-//        parameters.aesKeyStrength = AesKeyStrength.KEY_STRENGTH_256
-//
-//        //parameters.setPassword(password)
-//    }
-
     fun addFile(file : File) {
         fileList.add(file)
     }

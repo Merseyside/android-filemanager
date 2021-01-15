@@ -6,6 +6,7 @@ allprojects {
         maven { url = uri("https://kotlin.bintray.com/kotlinx")}
         maven { url = uri("https://kotlin.bintray.com/kotlin")}
 
+        maven { url = uri("https://jitpack.io") }
     }
 }
 

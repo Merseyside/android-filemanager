@@ -9,8 +9,8 @@ plugins {
 android {
     compileSdkVersion(FilemanagerVersions.Android.compileSdk)
 
-    dataBinding {
-        isEnabled = true
+    buildFeatures {
+        dataBinding = true
     }
 
     dexOptions {

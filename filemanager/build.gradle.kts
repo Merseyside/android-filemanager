@@ -1,11 +1,12 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("kotlin-android-extensions")
     id("com.github.dcendents.android-maven")
+    id("kotlinx-serialization")
 }
-
 
 group = "com.github.Merseyside"
 version = FilemanagerVersions.Android.version
@@ -55,11 +56,24 @@ android {
         res.srcDir("src/main/res/layouts/activity")
         res.srcDir("src/main/res/layouts/views")
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 
 val androidLibs = listOf(
     FilemanagerDeps.Libs.kotlinStdLib,
-    FilemanagerDeps.Libs.zip4j
+    FilemanagerDeps.Libs.serialization,
+    FilemanagerDeps.Libs.zip4j,
+    FilemanagerDeps.Libs.utils
 )
 
 dependencies {

@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.res.AssetManager
 import android.util.Log
 import com.merseyside.filemanager.utils.isEmpty
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
+import com.merseyside.utils.serialization.deserialize
+import kotlinx.serialization.DeserializationStrategy
+import java.io.*
 
 object AssetHelper {
 
@@ -68,5 +67,34 @@ object AssetHelper {
 
     }
 
-    const val TAG = "AssetHelper"
+    fun getAssetContent(context: Context, filename: String): String? {
+        val manager: AssetManager = context.assets
+
+        return try {
+            val file: InputStream = manager.open(filename)
+            val formArray = ByteArray(file.available())
+            file.read(formArray)
+            file.close()
+            String(formArray)
+        } catch (e: IOException) {
+            null
+        }
+    }
+
+    inline fun <reified T: Any> jsonAssetToModel(
+        context: Context,
+        filename: String
+    ): T? {
+        return getAssetContent(context, filename)?.deserialize()
+    }
+
+    inline fun <reified T: Any> jsonAssetToModel(
+        context: Context,
+        filename: String,
+        deserializationStrategy: DeserializationStrategy<T>
+    ): T? {
+        return getAssetContent(context, filename)?.deserialize(deserializationStrategy)
+    }
+
+    private const val TAG = "AssetHelper"
 }

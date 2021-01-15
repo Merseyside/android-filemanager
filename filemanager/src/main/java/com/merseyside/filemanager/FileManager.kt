@@ -14,7 +14,6 @@ import java.net.URISyntaxException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
 /**
  * Created by ivan_ on 10.12.2017.
  */
@@ -27,16 +26,15 @@ object FileManager {
     @Throws(NullPointerException::class)
     fun getStorageLocations(storage: STORAGE): File? {
         val externalLocations =
-            ExternalStorage.getAllStorageLocations()
-        try {
+            ExternalStorage.allStorageLocations
+        return try {
             when (storage) {
-                STORAGE.SD_CARD -> return externalLocations[ExternalStorage.SD_CARD]
-                STORAGE.EXTERNAL -> return externalLocations[ExternalStorage.EXTERNAL_SD_CARD]
+                STORAGE.SD_CARD -> externalLocations[ExternalStorage.SD_CARD]
+                STORAGE.EXTERNAL -> externalLocations[ExternalStorage.EXTERNAL_SD_CARD]
             }
         } catch (e: NullPointerException) {
             throw NullPointerException("Can not take access to storage. Are you allowed your app to interact with data?")
         }
-        return null
     }
 
     fun checkExternalPathWriteable(path: String?): Boolean {
@@ -247,6 +245,8 @@ object FileManager {
                 }
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
+            } finally {
+                cursor?.close()
             }
         } else if ("file".equals(uri.scheme, ignoreCase = true)) {
             return uri.path
@@ -271,5 +271,4 @@ object FileManager {
     }
 
     private const val TAG = "FileManager"
-
 }
