@@ -82,6 +82,22 @@ dependencies {
     compileOnly("javax.annotation:jsr250-api:1.0")
 }
 
+
+afterEvaluate {
+    publishing.publications {
+        create<MavenPublication>("release") {
+            groupId = group.toString()
+            artifactId = project.name
+            version = rootProject.version.toString()
+            from(components["release"])
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
+
 repositories {
     mavenCentral()
 }
