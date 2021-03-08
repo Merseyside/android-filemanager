@@ -1,16 +1,10 @@
 package com.merseyside.filemanager
 
-import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.util.Log
 import java.io.*
-import java.net.URISyntaxException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -67,12 +61,20 @@ object FileManager {
     }
 
     @Throws(Exception::class)
-    fun getStringFromFile(filePath: String): String {
-        val fl = File(filePath)
-        val fin = FileInputStream(fl)
-        val ret = convertStreamToString(fin)
-        fin.close()
-        return ret
+    fun getStringFromFile(context: Context, filePath: String): String {
+
+        val uri = Uri.parse(filePath)
+        val inputStream = if (isContentUri(uri)) {
+            context.contentResolver.openInputStream(uri)
+        } else {
+            FileInputStream(File(filePath))
+        }
+
+        if (inputStream != null) {
+            val ret = convertStreamToString(inputStream)
+            inputStream.close()
+            return ret
+        } else throw IllegalArgumentException("Stream is null")
     }
 
     fun createTempFile(
@@ -139,6 +141,10 @@ object FileManager {
         return file
     }
 
+    fun isContentUri(uri: Uri): Boolean {
+        return uri.scheme == "content"
+    }
+
     fun zipFiles(outputZipFile: File, vararg files: File): File {
         val zipHelper = ZipHelper(outputZipFile)
 
@@ -153,105 +159,21 @@ object FileManager {
         return zipHelper.zip()
     }
 
-    fun isExists(path: String): Boolean {
-        val file = File(path)
+    fun isExists(context: Context, path: String): Boolean {
+        val uri = Uri.parse(path)
 
-        return file.exists()
-    }
-
-    fun contentUriToFileUri(context: Context, uri: Uri): String {
-        var filePath = ""
-        Log.d("FileManager", "URI = $uri")
-        if ("content" == uri.scheme) {
-            context.contentResolver.query(
-                uri,
-                arrayOf(MediaStore.Files.FileColumns.DATA),
-                null,
-                null,
-                null
-            )?.apply {
-                moveToFirst()
-                filePath = getString(0)
-                close()
-            }
+        return if (isContentUri(uri)) {
+            checkURIResource(context, uri)
         } else {
-            filePath = uri.path ?: ""
+            File(path).exists()
         }
-
-        return filePath
     }
 
-    @Throws(URISyntaxException::class)
-    fun getFilePath(context: Context, uri: Uri): String? {
-        var uri = uri
-        var selection: String? = null
-        var selectionArgs: Array<String>? = null
-        // Uri is different in versions after KITKAT (Android 4.4), we need to
-        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(
-                context.applicationContext,
-                uri
-            )
-        ) {
-            when {
-                isExternalStorageDocument(uri) -> {
-                    val docId: String = DocumentsContract.getDocumentId(uri)
-                    val split = docId.split(":").toTypedArray()
-                    return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
-                }
-                isDownloadsDocument(uri) -> {
-                    val id: String = DocumentsContract.getDocumentId(uri)
-                    uri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"),
-                        java.lang.Long.valueOf(id)
-                    )
-                }
-                isMediaDocument(uri) -> {
-                    val docId: String = DocumentsContract.getDocumentId(uri)
-                    val split = docId.split(":").toTypedArray()
-                    val type = split[0]
-                    when (type) {
-                        "image" -> {
-                            uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                        }
-                        "video" -> {
-                            uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                        }
-                        "audio" -> {
-                            uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-                        }
-                    }
-                    selection = "_id=?"
-                    selectionArgs = arrayOf(
-                        split[1]
-                    )
-                }
-            }
-        }
-        if ("content".equals(uri.scheme, ignoreCase = true)) {
-            if (isGooglePhotosUri(uri)) {
-                return uri.lastPathSegment
-            }
-            val projection = arrayOf(
-                MediaStore.Images.Media.DATA
-            )
-            var cursor: Cursor? = null
-            try {
-                cursor = context.contentResolver
-                    .query(uri, projection, selection, selectionArgs, null)
-                val columnIndex =
-                    cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(columnIndex)
-                }
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            } finally {
-                cursor?.close()
-            }
-        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
-            return uri.path
-        }
-        return null
+    fun checkURIResource(context: Context, uri: Uri?): Boolean {
+        val cursor: Cursor? = context.contentResolver.query(uri!!, null, null, null, null)
+        val doesExist = cursor != null && cursor.moveToFirst()
+        cursor?.close()
+        return doesExist
     }
 
     fun isExternalStorageDocument(uri: Uri): Boolean {

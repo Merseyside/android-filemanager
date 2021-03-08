@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("kotlin-android-extensions")
     id("kotlinx-serialization")
 }
 
@@ -69,12 +68,7 @@ android {
 
 val androidLibs = listOf(
     FilemanagerDeps.Libs.kotlinStdLib,
-    FilemanagerDeps.Libs.appCompat,
-    FilemanagerDeps.Libs.material,
-    FilemanagerDeps.Libs.fragment,
-    FilemanagerDeps.Libs.recyclerView,
-    FilemanagerDeps.Libs.lifecycle,
-    FilemanagerDeps.Libs.constraintLayout
+    FilemanagerDeps.Libs.appCompat
 )
 
 dependencies {

@@ -4,8 +4,8 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("com.github.dcendents.android-maven")
     id("kotlinx-serialization")
+    id("maven-publish")
 }
 
 group = "com.github.Merseyside"
@@ -81,6 +81,7 @@ dependencies {
 
     compileOnly("javax.annotation:jsr250-api:1.0")
 }
+
 repositories {
     mavenCentral()
 }
