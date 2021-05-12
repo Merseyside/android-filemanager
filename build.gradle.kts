@@ -1,7 +1,7 @@
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
         maven { url = uri("https://kotlin.bintray.com/kotlinx")}
         maven { url = uri("https://kotlin.bintray.com/kotlin")}

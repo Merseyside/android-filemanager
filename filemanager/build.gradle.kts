@@ -1,23 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlinx-serialization")
-    id("maven-publish")
+    plugin(FilemanagerDeps.Plugins.androidLibrary)
+    plugin(FilemanagerDeps.Plugins.kotlinAndroid)
+    plugin(FilemanagerDeps.Plugins.kotlinKapt)
+    plugin(FilemanagerDeps.Plugins.kotlinSerialization)
+    plugin(FilemanagerDeps.Plugins.mavenPublish)
 }
 
-group = "com.github.Merseyside"
+group = FilemanagerVersions.Common.groupId
 version = FilemanagerVersions.Android.version
 
 android {
     compileSdkVersion(FilemanagerVersions.Android.compileSdk)
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 
     defaultConfig {
         minSdkVersion(FilemanagerVersions.Android.minSdk)
@@ -81,7 +76,6 @@ dependencies {
 
     compileOnly("javax.annotation:jsr250-api:1.0")
 }
-
 
 afterEvaluate {
     publishing.publications {

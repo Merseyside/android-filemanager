@@ -1,8 +1,10 @@
 package com.merseyside.filemanager
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.database.Cursor
 import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import java.io.*
 import java.util.regex.Matcher
@@ -89,6 +91,19 @@ object FileManager {
         return file
     }
 
+    fun writeToFile(file: File, data: Any) {
+        try {
+            val fos = FileOutputStream(file)
+
+            val oos = ObjectOutputStream(fos)
+            oos.writeObject(data)
+
+            oos.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     fun writeToFile(file: File, data: String) {
         try {
             file.writeText(data)
@@ -97,42 +112,68 @@ object FileManager {
         }
     }
 
-    fun readFromFile(path: String): String {
-        val inputStream: InputStream = File(path).inputStream()
+    fun readStringFromFile(file: File): String {
+        val inputStream: InputStream = file.inputStream()
         return inputStream.bufferedReader().use { it.readText() }
     }
 
-    fun createFile(path: String, filename: String): File? {
-        val filePath = File(path)
+    fun readFromFile(file: File): Any {
+        val fos = FileInputStream(file)
+        val oos = ObjectInputStream(fos)
+
+        return oos.readObject()
+    }
+
+    fun createFile(file: File): Boolean {
+        return try {
+            if (!file.exists()) {
+                if (file.createNewFile()) {
+                    Log.d(TAG, "File ${file.path} created!")
+                    true
+                } else {
+                    Log.e(TAG, "Cannot create file")
+                    false
+                }
+            } else {
+                if (file.delete()) {
+                    createFile(file)
+                }
+
+                false
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "path = $file")
+            e.printStackTrace()
+
+            false
+        }
+    }
+
+    fun createFile(
+        path: String,
+        folderName: String? = null,
+        filename: String
+    ): File? {
+        val filePath = File(path, folderName)
         if (!filePath.exists()) {
             filePath.mkdir()
         }
 
         val file = File(filePath, filename)
 
-        try {
-
-            if (!file.exists()) {
-                if (file.createNewFile()) {
-                    return file
-                } else {
-                    Log.e(TAG, "Cannot create file")
-                }
-            } else {
-                if (file.delete()) {
-                    return createFile(path, filename)
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "path = $file")
-            e.printStackTrace()
-        }
+        createFile(file)
 
         return null
     }
 
-    fun createFile(path: String, filename: String, data: String): File? {
-        val file = createFile(path, filename)
+    fun createFile(
+        path: String,
+        folderName: String,
+        filename: String,
+        data: String,
+        contextWrapper: ContextWrapper? = null
+    ): File? {
+        val file = createFile(path, folderName, filename)
 
         if (file != null) {
             writeToFile(file, data)

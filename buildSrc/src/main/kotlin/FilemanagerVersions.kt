@@ -1,5 +1,6 @@
 object FilemanagerVersions {
     object Common {
+        const val groupId = "com.github.Merseyside"
         const val appId = "com.merseyside.filemanager"
     }
 
@@ -8,11 +9,11 @@ object FilemanagerVersions {
         const val targetSdk = 30
         const val minSdk = 21
 
-        const val version = "1.0.4"
-        const val versionCode = 104
+        const val version = "1.0.5"
+        const val versionCode = 105
     }
 
-    const val kotlin = "1.4.31"
+    const val kotlin = "1.5.0"
 
     object Plugins {
         const val kotlin = FilemanagerVersions.kotlin
@@ -26,6 +27,6 @@ object FilemanagerVersions {
         const val serialization = "1.1.0"
         const val appCompat = "1.1.0"
         const val zip4j = "2.6.0"
-        const val utils = "1.3.2"
+        const val utils = "1.3.4"
     }
 }

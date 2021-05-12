@@ -35,7 +35,7 @@ object AssetHelper {
     ): Boolean {
         val assetManager: AssetManager = context.assets
 
-        val dstPathFile = FileManager.createFile(dstFile.absolutePath, filename)
+        val dstPathFile = FileManager.createFile(dstFile.absolutePath, null, filename)
 
         if (dstPathFile != null) {
             if (dstPathFile.isEmpty() || overwrite) {

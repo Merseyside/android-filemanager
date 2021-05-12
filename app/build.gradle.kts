@@ -8,19 +8,6 @@ plugins {
 android {
     compileSdkVersion(FilemanagerVersions.Android.compileSdk)
 
-    buildFeatures {
-        dataBinding = true
-    }
-
-    dexOptions {
-        javaMaxHeapSize = "2g"
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
     defaultConfig {
         minSdkVersion(FilemanagerVersions.Android.minSdk)
         targetSdkVersion(FilemanagerVersions.Android.targetSdk)
@@ -32,6 +19,19 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
+    dexOptions {
+        javaMaxHeapSize = "2g"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     buildTypes {

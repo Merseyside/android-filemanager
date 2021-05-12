@@ -1,5 +1,14 @@
 object FilemanagerDeps {
 
+    object Plugins {
+        val androidApplication = GradlePlugin(id = "com.android.application")
+        val androidLibrary = GradlePlugin(id = "com.android.library")
+        val kotlinKapt = GradlePlugin(id = "kotlin-kapt")
+        val kotlinAndroid = GradlePlugin(id = "kotlin-android")
+        val kotlinSerialization = GradlePlugin(id = "kotlinx-serialization")
+        val mavenPublish = GradlePlugin(id = "maven-publish")
+    }
+
     object Libs {
 
         val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${FilemanagerVersions.Libs.kotlinStdLib}"
