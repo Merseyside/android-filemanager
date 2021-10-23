@@ -1,21 +1,21 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlinx-serialization")
+    id(Plugins.androidApplication)
+    id(Plugins.kotlinAndroid)
+    id(Plugins.kotlinKapt)
+    id(Plugins.kotlinSerialization)
 }
 
 android {
-    compileSdkVersion(FilemanagerVersions.Android.compileSdk)
+    compileSdkVersion(Versions.Application.compileSdk)
 
     defaultConfig {
-        minSdkVersion(FilemanagerVersions.Android.minSdk)
-        targetSdkVersion(FilemanagerVersions.Android.targetSdk)
+        minSdkVersion(Versions.Application.minSdk)
+        targetSdkVersion(Versions.Application.targetSdk)
 
-        applicationId = FilemanagerVersions.Common.appId
+        applicationId = Versions.Application.applicationId
 
-        versionCode = FilemanagerVersions.Android.versionCode
-        versionName = FilemanagerVersions.Android.version
+        versionCode = Versions.Application.versionCode
+        versionName = Versions.Application.version
 
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
@@ -29,11 +29,6 @@ android {
         javaMaxHeapSize = "2g"
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -44,20 +39,6 @@ android {
         }
     }
 
-    packagingOptions {
-        exclude("META-INF/DEPENDENCIES")
-        exclude("META-INF/*.kotlin_module")
-        exclude("META-INF/*.kotlin_module")
-        exclude("META-INF/DEPENDENCIES")
-        exclude("META-INF/LICENSE")
-        exclude("META-INF/LICENSE.txt")
-        exclude("META-INF/license.txt")
-        exclude("META-INF/NOTICE")
-        exclude("META-INF/NOTICE.txt")
-        exclude("META-INF/notice.txt")
-        exclude("META-INF/ASL2.0")
-    }
-
     sourceSets.getByName("main") {
         res.srcDir("src/main/res/")
         res.srcDir("src/main/res/layouts/fragment")
@@ -66,13 +47,10 @@ android {
     }
 }
 
-val androidLibs = listOf(
-    FilemanagerDeps.Libs.kotlinStdLib,
-    FilemanagerDeps.Libs.appCompat
+val android = listOf(
+    androidLibs.appCompat
 )
 
 dependencies {
-    androidLibs.forEach { lib -> implementation(lib) }
-
-    compileOnly("javax.annotation:jsr250-api:1.0")
+    android.forEach { lib -> implementation(lib) }
 }
