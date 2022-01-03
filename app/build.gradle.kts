@@ -6,16 +6,16 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.Application.compileSdk)
+    compileSdk = Application.compileSdk
 
     defaultConfig {
-        minSdkVersion(Versions.Application.minSdk)
-        targetSdkVersion(Versions.Application.targetSdk)
+        minSdk = Application.minSdk
+        targetSdk = Application.targetSdk
 
-        applicationId = Versions.Application.applicationId
+        applicationId = Application.applicationId
 
-        versionCode = Versions.Application.versionCode
-        versionName = Versions.Application.version
+        versionCode = Metadata.versionCode
+        versionName = Metadata.version
 
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
@@ -23,10 +23,6 @@ android {
 
     buildFeatures {
         dataBinding = true
-    }
-
-    dexOptions {
-        javaMaxHeapSize = "2g"
     }
 
     buildTypes {

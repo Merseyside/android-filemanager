@@ -1,31 +1,23 @@
 plugins {
-    id(Plugins.androidLibrary)
+    id(Plugins.androidConvention)
     id(Plugins.kotlinAndroid)
     id(Plugins.kotlinKapt)
     id(Plugins.kotlinSerialization)
     id(Plugins.mavenPublish)
 }
 
-group = Versions.Application.groupId
-version = Versions.Application.version
-
 android {
-    compileSdkVersion(Versions.Application.compileSdk)
+    compileSdk = Application.compileSdk
 
     defaultConfig {
-        minSdkVersion(Versions.Application.minSdk)
-        targetSdkVersion(Versions.Application.targetSdk)
-        versionCode = Versions.Application.versionCode
-        versionName = Versions.Application.version
+        minSdk = Application.minSdk
+        targetSdk = Application.targetSdk
     }
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-        getByName("debug") {
-            isDebuggable = true
         }
     }
 
@@ -45,23 +37,4 @@ val android = listOf(
 
 dependencies {
     android.forEach { lib -> implementation(lib) }
-}
-
-afterEvaluate {
-    publishing.publications {
-        create<MavenPublication>("release") {
-            groupId = group.toString()
-            artifactId = project.name
-            version = rootProject.version.toString()
-            from(components["release"])
-        }
-    }
-
-    repositories {
-        mavenCentral()
-    }
-}
-
-repositories {
-    mavenCentral()
 }
