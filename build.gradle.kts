@@ -1,9 +1,17 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    `nexus-config`
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
-
-        maven { url = uri("https://jitpack.io") }
     }
 }
 
