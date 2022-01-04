@@ -3,7 +3,7 @@ package com.merseyside.filemanager.file
 import android.content.Context
 import com.merseyside.filemanager.FileManager
 import com.merseyside.filemanager.utils.isEmpty
-import com.merseyside.utils.ext.log
+import com.merseyside.merseyLib.kotlin.extensions.log
 import java.lang.Exception
 
 abstract class DefaultFile(

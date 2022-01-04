@@ -8,6 +8,7 @@ object Plugins {
     const val androidConvention = "android-convention"
     const val kotlinKapt = "kotlin-kapt"
     const val kotlinAndroid = "kotlin-android"
+    const val kotlinConvention = "kotlin-convention"
     const val mavenPublish = "maven-publish"
     const val mavenPublishConfig = "maven-publish-config"
     const val signing = "signing"

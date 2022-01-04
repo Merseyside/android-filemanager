@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.AssetManager
 import android.util.Log
 import com.merseyside.filemanager.utils.isEmpty
-import com.merseyside.utils.serialization.deserialize
+import com.merseyside.merseyLib.kotlin.serialization.deserialize
 import kotlinx.serialization.DeserializationStrategy
 import java.io.*
 
